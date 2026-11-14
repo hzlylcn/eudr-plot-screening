@@ -1,0 +1,525 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-001",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "post2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.479,
+     6.301
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-002",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "post2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.536125,
+       5.439875
+      ],
+      [
+       -7.533875,
+       5.439875
+      ],
+      [
+       -7.533875,
+       5.442125
+      ],
+      [
+       -7.536125,
+       5.442125
+      ],
+      [
+       -7.536125,
+       5.439875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-003",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "post2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.409,
+     5.813
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-004",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "post2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.374125,
+       5.551875
+      ],
+      [
+       -7.371875,
+       5.551875
+      ],
+      [
+       -7.371875,
+       5.554125
+      ],
+      [
+       -7.374125,
+       5.554125
+      ],
+      [
+       -7.374125,
+       5.551875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-005",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "post2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.495,
+     6.297
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-006",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "post2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.320125,
+       5.459875
+      ],
+      [
+       -7.317875,
+       5.459875
+      ],
+      [
+       -7.317875,
+       5.462125
+      ],
+      [
+       -7.320125,
+       5.462125
+      ],
+      [
+       -7.320125,
+       5.459875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-007",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "post2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.563,
+     5.813
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-008",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "pre2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.641,
+     5.961
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-009",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "pre2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.554125,
+       6.153875
+      ],
+      [
+       -7.551875,
+       6.153875
+      ],
+      [
+       -7.551875,
+       6.156125
+      ],
+      [
+       -7.554125,
+       6.156125
+      ],
+      [
+       -7.554125,
+       6.153875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-010",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "pre2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.833,
+     5.843
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-011",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "pre2020_loss",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.444125,
+       5.883875
+      ],
+      [
+       -7.441875,
+       5.883875
+      ],
+      [
+       -7.441875,
+       5.886125
+      ],
+      [
+       -7.444125,
+       5.886125
+      ],
+      [
+       -7.444125,
+       5.883875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-012",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "stable_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.251,
+     6.101
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-013",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "stable_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.312125,
+       5.895875
+      ],
+      [
+       -7.309875,
+       5.895875
+      ],
+      [
+       -7.309875,
+       5.898125
+      ],
+      [
+       -7.312125,
+       5.898125
+      ],
+      [
+       -7.312125,
+       5.895875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-014",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "stable_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.189,
+     5.983
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-015",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "stable_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.192125,
+       5.515875
+      ],
+      [
+       -7.189875,
+       5.515875
+      ],
+      [
+       -7.189875,
+       5.518125
+      ],
+      [
+       -7.192125,
+       5.518125
+      ],
+      [
+       -7.192125,
+       5.515875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-016",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "no_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.101,
+     6.303
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-017",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "no_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.012125,
+       6.351875
+      ],
+      [
+       -7.009875,
+       6.351875
+      ],
+      [
+       -7.009875,
+       6.354125
+      ],
+      [
+       -7.012125,
+       6.354125
+      ],
+      [
+       -7.012125,
+       6.351875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-018",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "no_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.065,
+     6.323
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-019",
+    "declared_area_ha": 6.25,
+    "commodity": "cocoa",
+    "expected_case": "no_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -7.184125,
+       6.321875
+      ],
+      [
+       -7.181875,
+       6.321875
+      ],
+      [
+       -7.181875,
+       6.324125
+      ],
+      [
+       -7.184125,
+       6.324125
+      ],
+      [
+       -7.184125,
+       6.321875
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "plot_id": "DEMO-020",
+    "declared_area_ha": 2.5,
+    "commodity": "cocoa",
+    "expected_case": "no_forest",
+    "synthetic": true
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -7.005,
+     6.263
+    ]
+   }
+  }
+ ]
+}

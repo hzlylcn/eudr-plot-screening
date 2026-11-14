@@ -1,0 +1,15 @@
+name: eudr
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pystac-client
+  - odc-stac
+  - rioxarray
+  - geopandas
+  - shapely
+  - pyproj
+  - dask
+  - matplotlib
+  - jupyterlab
+  - ipykernel

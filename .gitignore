@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+data/raw/
+outputs/
+*.tif
+!web/**/*.tif
+
+# private notes (market research, not part of the public repo)
+docs/
