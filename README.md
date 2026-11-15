@@ -2,6 +2,8 @@
 
 Screens agricultural plots for **forest loss after 31 December 2020**, the EU Deforestation Regulation (EUDR) cut-off date, using only open satellite data.
 
+**🗺️ Live demo: [hzlylcn.github.io/eudr-plot-screening](https://hzlylcn.github.io/eudr-plot-screening/)** · 📄 [Example PDF report](examples/eudr_screening_report.pdf)
+
 > ⚠️ This is a **screening tool**, not a legal compliance determination. Plots flagged "review" need human inspection and supporting documentation.
 
 ## What it does
