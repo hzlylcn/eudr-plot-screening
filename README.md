@@ -42,7 +42,14 @@ No Google Earth Engine account or paid API is required.
 - [x] Sentinel-2 before/after + NDVI (notebook 01)
 - [x] Forest baseline + loss metrics per plot (notebook 02): 7/7 post-2020 loss plots flagged, 0/13 false alarms on the demo set
 - [x] Web map (MapLibre): flags, per-plot reasons, Sentinel-2 before/after thumbnails, forest-loss overlay
-- [ ] PDF report
+- [x] PDF report: summary, results table, one sheet per flagged plot, method and limitations ([example](examples/eudr_screening_report.pdf))
+
+## PDF report
+
+```bash
+python scripts/build_web.py --thumbs   # if not done yet
+python scripts/make_report.py          # -> outputs/eudr_screening_report.pdf
+```
 
 ## Web map
 

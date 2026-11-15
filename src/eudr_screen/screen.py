@@ -123,7 +123,7 @@ def _reason(r) -> str:
         if _had_forest(r):
             return "No tree-cover loss after 2020; plot still largely forest per JRC 2020."
         return "No tree-cover loss after 2020."
-    loss = f"{r.loss_post2020_ha:.2f} ha tree-cover loss after 2020 ({r.loss_years})"
+    loss = f"{r.loss_post2020_ha:.2f} ha tree-cover loss after 2020 ({r.loss_years.replace(',', ', ')})"
     if _had_forest(r):
         return f"{loss}; JRC maps {r.jrc_forest_2020_share:.0%} of plot as forest in 2020."
     return (f"{loss}, but JRC 2020 maps only {r.jrc_forest_2020_share:.0%} as forest "
