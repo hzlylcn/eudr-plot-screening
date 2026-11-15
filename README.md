@@ -41,7 +41,18 @@ No Google Earth Engine account or paid API is required.
 - [x] Demo plots (20 synthetic plots, south-west Côte d'Ivoire, known expected answers)
 - [x] Sentinel-2 before/after + NDVI (notebook 01)
 - [x] Forest baseline + loss metrics per plot (notebook 02): 7/7 post-2020 loss plots flagged, 0/13 false alarms on the demo set
-- [ ] Report + web map
+- [x] Web map (MapLibre): flags, per-plot reasons, Sentinel-2 before/after thumbnails, forest-loss overlay
+- [ ] PDF report
+
+## Web map
+
+```bash
+python scripts/build_web.py --thumbs   # screening + Sentinel-2 thumbnails -> web/data/
+python -m http.server 8765 --directory web
+# open http://localhost:8765
+```
+
+`web/` is a static site (no build step) and can be served from GitHub Pages.
 
 ## Flags
 
@@ -77,5 +88,8 @@ docs/       notes and market research
 | Sentinel-2 L2A | ESA Copernicus, via Element 84 Earth Search on AWS | Copernicus open data |
 | Global Forest Cover 2020 (V4) | © European Union, EC Joint Research Centre | CC BY 4.0 |
 | Global Forest Change v1.13 (2000–2025) | Hansen/UMD/Google/USGS/NASA | CC BY 4.0 |
+| Web map background: Sentinel-2 cloudless 2020 | EOX IT Services GmbH | CC BY-NC-SA 4.0 (non-commercial) |
+| Web map overlay: tree cover loss tiles | Global Forest Watch (Hansen/UMD data) | CC BY 4.0 |
+| Web map background: OpenStreetMap | OpenStreetMap contributors | ODbL |
 
 Demo plots are **synthetic** and do not represent real farms.

@@ -35,28 +35,34 @@ N_PER_CASE = {"post2020_loss": 7, "pre2020_loss": 4, "stable_forest": 4, "no_for
 OUT = ROOT / "data" / "demo_plots.geojson"
 
 
-def cell_stats(lossyear, cover):
-    h, w = lossyear.shape
+def _blocks(a):
+    h, w = a.shape
     h, w = h - h % CELL, w - w % CELL
-    ly = lossyear[:h, :w].reshape(h // CELL, CELL, w // CELL, CELL)
-    cv = cover[:h, :w].reshape(h // CELL, CELL, w // CELL, CELL)
+    return a[:h, :w].reshape(h // CELL, CELL, w // CELL, CELL)
+
+
+def cell_stats(lossyear, cover, datamask):
+    ly, cv = _blocks(lossyear), _blocks(cover)
     post = (ly > 20).mean(axis=(1, 3))
     pre = ((ly > 0) & (ly <= 20)).mean(axis=(1, 3))
     cover_mean = cv.mean(axis=(1, 3))
-    return post, pre, cover_mean
+    land = (_blocks(datamask) == 1).all(axis=(1, 3))  # 1 = land, 2 = water, 0 = no data
+    return post, pre, cover_mean, land
 
 
 def main():
-    print("Reading Hansen lossyear / treecover2000 window ...")
+    print("Reading Hansen lossyear / treecover2000 / datamask window ...")
     lossyear, tr = hansen.read_window("lossyear", AOI)
     cover, _ = hansen.read_window("treecover2000", AOI)
-    post, pre, cov = cell_stats(lossyear, cover)
+    datamask, _ = hansen.read_window("datamask", AOI)
+    post, pre, cov, land = cell_stats(lossyear, cover, datamask)
 
     rules = {
         "post2020_loss": (post > 0.25) & (cov > 50),
         "pre2020_loss": (pre > 0.5) & (post == 0),
         "stable_forest": (cov > 80) & (post == 0) & (pre == 0),
-        "no_forest": (cov < 15) & (post == 0) & (pre == 0),
+        # land only: low cover + no loss alone also matches lakes
+        "no_forest": (cov < 15) & (post == 0) & (pre == 0) & land,
     }
 
     rng = np.random.default_rng(SEED)

@@ -1,0 +1,122 @@
+{
+ "DEMO-001": {
+  "ndvi_after": 0.302,
+  "ndvi_before": 0.559,
+  "scenes_after": 19,
+  "scenes_before": 30
+ },
+ "DEMO-002": {
+  "ndvi_after": 0.636,
+  "ndvi_before": 0.735,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-003": {
+  "ndvi_after": 0.511,
+  "ndvi_before": 0.492,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-004": {
+  "ndvi_after": 0.699,
+  "ndvi_before": 0.662,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-005": {
+  "ndvi_after": 0.503,
+  "ndvi_before": 0.55,
+  "scenes_after": 19,
+  "scenes_before": 30
+ },
+ "DEMO-006": {
+  "ndvi_after": 0.659,
+  "ndvi_before": 0.696,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-007": {
+  "ndvi_after": 0.61,
+  "ndvi_before": 0.587,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-008": {
+  "ndvi_after": 0.513,
+  "ndvi_before": 0.571,
+  "scenes_after": 4,
+  "scenes_before": 15
+ },
+ "DEMO-009": {
+  "ndvi_after": 0.772,
+  "ndvi_before": 0.661,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-010": {
+  "ndvi_after": 0.499,
+  "ndvi_before": 0.501,
+  "scenes_after": 4,
+  "scenes_before": 15
+ },
+ "DEMO-011": {
+  "ndvi_after": 0.752,
+  "ndvi_before": 0.699,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-012": {
+  "ndvi_after": 0.625,
+  "ndvi_before": 0.514,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-013": {
+  "ndvi_after": 0.761,
+  "ndvi_before": 0.694,
+  "scenes_after": 6,
+  "scenes_before": 13
+ },
+ "DEMO-014": {
+  "ndvi_after": 0.639,
+  "ndvi_before": 0.603,
+  "scenes_after": 10,
+  "scenes_before": 28
+ },
+ "DEMO-015": {
+  "ndvi_after": 0.709,
+  "ndvi_before": 0.682,
+  "scenes_after": 10,
+  "scenes_before": 28
+ },
+ "DEMO-016": {
+  "ndvi_after": 0.114,
+  "ndvi_before": 0.098,
+  "scenes_after": 4,
+  "scenes_before": 15
+ },
+ "DEMO-017": {
+  "ndvi_after": 0.493,
+  "ndvi_before": 0.408,
+  "scenes_after": 4,
+  "scenes_before": 15
+ },
+ "DEMO-018": {
+  "ndvi_after": 0.256,
+  "ndvi_before": 0.217,
+  "scenes_after": 4,
+  "scenes_before": 15
+ },
+ "DEMO-019": {
+  "ndvi_after": 0.409,
+  "ndvi_before": 0.309,
+  "scenes_after": 4,
+  "scenes_before": 15
+ },
+ "DEMO-020": {
+  "ndvi_after": 0.151,
+  "ndvi_before": 0.175,
+  "scenes_after": 4,
+  "scenes_before": 15
+ }
+}

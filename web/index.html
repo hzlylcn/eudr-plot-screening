@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EUDR Plot Screening: Demo</title>
+<meta name="description" content="Screening agricultural plots for forest loss after 31 Dec 2020 with open satellite data (Sentinel-2, JRC GFC2020, Hansen GFC).">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2933; --muted: #616e7c; --line: #e4e7eb; --panel: #f8f9fa;
+    --low: #2e7d32; --review: #c62828; --conflict: #ef6c00; --accent: #0b5cad;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+  #app { display: flex; height: 100%; }
+  #side { width: 380px; flex: none; display: flex; flex-direction: column; border-right: 1px solid var(--line); background: var(--bg); }
+  #map { flex: 1; }
+  header { padding: 16px 16px 12px; border-bottom: 1px solid var(--line); }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0; font-size: 13px; }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; background: #fff4e5; color: #8a4b00; border: 1px solid #ffd8a8; margin-top: 6px; }
+  #summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .stat { border: 1px solid var(--line); border-radius: 8px; padding: 8px; cursor: pointer; background: var(--bg); text-align: left; font: inherit; color: inherit; }
+  .stat[aria-pressed="true"] { outline: 2px solid var(--accent); }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { font-size: 11px; color: var(--muted); }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  #list { overflow: auto; flex: 1; }
+  .row { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .row:hover, .row.active { background: var(--panel); }
+  .row small { color: var(--muted); }
+  #detail { display: none; overflow: auto; flex: 1; padding: 14px 16px; }
+  #detail.open { display: block; }
+  #detail h2 { font-size: 16px; margin: 0 0 6px; }
+  .flag { display: inline-block; color: #fff; border-radius: 4px; padding: 1px 8px; font-size: 12px; font-weight: 600; }
+  .reason { background: var(--panel); border-left: 3px solid var(--accent); padding: 8px 10px; margin: 10px 0; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 4px 0; border-bottom: 1px solid var(--line); }
+  td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .thumbs figure { margin: 0; }
+  .thumbs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); display: block; }
+  .thumbs figcaption { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .back { background: none; border: 0; color: var(--accent); cursor: pointer; padding: 0; font: inherit; margin-bottom: 8px; }
+  footer { padding: 10px 16px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+  footer a { color: var(--muted); }
+  #layers { position: absolute; top: 10px; right: 10px; z-index: 2; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+  #layers label { display: block; cursor: pointer; white-space: nowrap; }
+  #layers .t { font-weight: 600; margin-bottom: 2px; }
+  .legend-loss { display: inline-block; width: 10px; height: 10px; background: #dc6c9a; margin-right: 4px; vertical-align: middle; }
+  #mapwrap { position: relative; flex: 1; display: flex; }
+  @media (max-width: 760px) {
+    #app { flex-direction: column-reverse; }
+    #side { width: 100%; height: 52%; border-right: 0; border-top: 1px solid var(--line); overflow-y: auto; }
+    #list, #detail { flex: none; overflow: visible; }
+    .sub { display: none; }
+    #mapwrap { height: 48%; flex: none; }
+    header { padding: 10px 16px; }
+    h1 { font-size: 16px; }
+    #layers { font-size: 11px; padding: 6px 8px; top: 8px; right: 8px; }
+    #layers .t { display: none; }
+    #summary { padding: 8px 16px; }
+    .stat { padding: 6px; }
+    .stat b { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <header>
+      <h1>EUDR Plot Screening</h1>
+      <p class="sub">Was there forest loss on these plots after the EUDR cut-off (31 Dec 2020)? Open data only: Sentinel-2, JRC GFC2020, Hansen GFC.</p>
+      <span class="badge">Synthetic demo plots · south-west Côte d'Ivoire</span>
+    </header>
+    <div id="summary"></div>
+    <div id="list"></div>
+    <div id="detail"></div>
+    <footer>
+      Screening only, not a legal compliance determination.
+      Data: © European Union (JRC GFC2020, CC BY 4.0); Hansen/UMD/Google/USGS/NASA (CC BY 4.0); Copernicus Sentinel-2.
+      <a href="https://github.com/hzlylcn/eudr-plot-screening">Source code</a>
+    </footer>
+  </aside>
+  <div id="mapwrap">
+    <div id="map"></div>
+    <div id="layers">
+      <div class="t">Background</div>
+      <label><input type="radio" name="base" value="osm" checked> Map (OSM)</label>
+      <label><input type="radio" name="base" value="s2"> Sentinel-2 2020 (EOX)</label>
+      <div class="t" style="margin-top:6px">Overlay</div>
+      <label><input type="checkbox" id="loss"> <span class="legend-loss"></span>Tree-cover loss 2021–2025</label>
+    </div>
+  </div>
+</div>
+
+<script>
+const FLAGS = {
+  low_risk:             { label: "Low risk",            color: "#2e7d32" },
+  review:               { label: "Review",              color: "#c62828" },
+  review_data_conflict: { label: "Review: data conflict", color: "#ef6c00" },
+};
+const pct = v => v == null ? "–" : Math.round(v * 100) + "%";
+const num = (v, d = 2) => v == null ? "–" : Number(v).toFixed(d);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function centroid(f) {
+  const ring = f.geometry.type === "Polygon" ? f.geometry.coordinates[0] : f.geometry.coordinates[0][0];
+  let x = 0, y = 0;
+  ring.forEach(([a, b]) => { x += a; y += b; });
+  return [x / ring.length, y / ring.length];
+}
+
+const map = new maplibregl.Map({
+  container: "map",
+  style: {
+    version: 8,
+    sources: {
+      osm: { type: "raster", tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], tileSize: 256, maxzoom: 19,
+             attribution: "© OpenStreetMap contributors" },
+      s2: { type: "raster", tiles: ["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg"], tileSize: 256, maxzoom: 15,
+            attribution: "Sentinel-2 cloudless 2020 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2020)" },
+      loss: { type: "raster", tiles: ["https://tiles.globalforestwatch.org/umd_tree_cover_loss/v1.13/dynamic/{z}/{x}/{y}.png?start_year=2021&end_year=2025"],
+              tileSize: 256, maxzoom: 12, attribution: "Tree cover loss: Hansen/UMD/Google/USGS/NASA via Global Forest Watch" },
+    },
+    layers: [
+      { id: "osm", type: "raster", source: "osm" },
+      { id: "s2", type: "raster", source: "s2", layout: { visibility: "none" } },
+      { id: "loss", type: "raster", source: "loss", layout: { visibility: "none" }, paint: { "raster-opacity": 0.55 } },
+    ],
+  },
+  center: [-7.1, 5.9], zoom: 8,
+  attributionControl: { compact: true },
+});
+window.eudrMap = map; // handy for debugging in the browser console
+map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+map.addControl(new maplibregl.ScaleControl({ unit: "metric" }), "bottom-left");
+
+document.querySelectorAll('input[name="base"]').forEach(r => r.addEventListener("change", e => {
+  map.setLayoutProperty("osm", "visibility", e.target.value === "osm" ? "visible" : "none");
+  map.setLayoutProperty("s2", "visibility", e.target.value === "s2" ? "visible" : "none");
+}));
+document.getElementById("loss").addEventListener("change", e =>
+  map.setLayoutProperty("loss", "visibility", e.target.checked ? "visible" : "none"));
+
+let data, activeFilter = null, selected = null;
+const colorExpr = ["match", ["get", "flag"], ...Object.entries(FLAGS).flatMap(([k, v]) => [k, v.color]), "#888"];
+
+// Wait for the style before adding sources: map.loaded() can be false while
+// tiles are still loading even though the "load" event has already fired.
+// Keep the compact attribution collapsed (it opens itself on load and when
+// sources change, which covers half the map on phones). The (i) opens it.
+const collapseAttrib = () => document.querySelector(".maplibregl-ctrl-attrib")
+  ?.classList.remove("maplibregl-compact-show");
+map.on("load", collapseAttrib);
+document.querySelectorAll("#layers input").forEach(i => i.addEventListener("change", () => setTimeout(collapseAttrib, 300)));
+
+let mapLoaded = false; // isStyleLoaded() is also false while tiles stream in
+const mapReady = new Promise(res => map.once("load", () => { mapLoaded = true; res(); }));
+const dataReady = fetch("data/plots.geojson").then(r => r.json());
+
+// List and summary do not need the map: show them as soon as data arrives.
+dataReady.then(gj => { data = gj; renderSummary(); renderList(); });
+
+Promise.all([mapReady, dataReady]).then(([, gj]) => {
+  const points = { type: "FeatureCollection", features: gj.features.map(f => ({
+    type: "Feature", properties: f.properties, geometry: { type: "Point", coordinates: centroid(f) } })) };
+
+  {
+    map.addSource("plots", { type: "geojson", data: gj });
+    map.addSource("plot-points", { type: "geojson", data: points });
+    map.addLayer({ id: "plot-fill", type: "fill", source: "plots", minzoom: 13,
+      paint: { "fill-color": colorExpr, "fill-opacity": 0.25 } });
+    map.addLayer({ id: "plot-casing", type: "line", source: "plots", minzoom: 13,
+      paint: { "line-color": "#ffffff", "line-width": 5 } });
+    map.addLayer({ id: "plot-line", type: "line", source: "plots", minzoom: 13,
+      paint: { "line-color": colorExpr, "line-width": 2 } });
+    map.addLayer({ id: "plot-pt", type: "circle", source: "plot-points", maxzoom: 13,
+      paint: { "circle-color": colorExpr, "circle-radius": ["interpolate", ["linear"], ["zoom"], 7, 5, 12, 9],
+               "circle-stroke-color": "#fff", "circle-stroke-width": 2 } });
+
+    for (const id of ["plot-pt", "plot-fill"]) {
+      map.on("click", id, e => select(e.features[0].properties.plot_id));
+      map.on("mouseenter", id, () => map.getCanvas().style.cursor = "pointer");
+      map.on("mouseleave", id, () => map.getCanvas().style.cursor = "");
+    }
+    fitAll();
+  }
+});
+
+function fitAll() {
+  const b = new maplibregl.LngLatBounds();
+  data.features.forEach(f => b.extend(centroid(f)));
+  map.fitBounds(b, { padding: 40, duration: 0 });
+}
+
+function renderSummary() {
+  const counts = {};
+  data.features.forEach(f => counts[f.properties.flag] = (counts[f.properties.flag] || 0) + 1);
+  document.getElementById("summary").innerHTML = Object.entries(FLAGS).map(([k, v]) =>
+    `<button class="stat" data-flag="${k}" aria-pressed="${activeFilter === k}">
+       <b style="color:${v.color}">${counts[k] || 0}</b><span>${v.label}</span></button>`).join("");
+  document.querySelectorAll(".stat").forEach(b => b.onclick = () => {
+    activeFilter = activeFilter === b.dataset.flag ? null : b.dataset.flag;
+    const filter = activeFilter ? ["==", ["get", "flag"], activeFilter] : null;
+    ["plot-fill", "plot-casing", "plot-line", "plot-pt"].forEach(l => map.getLayer(l) && map.setFilter(l, filter));
+    renderSummary(); renderList();
+  });
+}
+
+function renderList() {
+  const order = { review: 0, review_data_conflict: 1, low_risk: 2 };
+  const feats = data.features.filter(f => !activeFilter || f.properties.flag === activeFilter)
+    .sort((a, b) => order[a.properties.flag] - order[b.properties.flag] || a.properties.plot_id.localeCompare(b.properties.plot_id));
+  document.getElementById("list").innerHTML = feats.map(f => {
+    const p = f.properties, fl = FLAGS[p.flag];
+    return `<div class="row${p.plot_id === selected ? " active" : ""}" data-id="${esc(p.plot_id)}">
+      <div><span class="dot" style="background:${fl.color}"></span><b>${esc(p.plot_id)}</b>
+      <small> · ${num(p.area_ha, 1)} ha · ${p.geom_input}</small></div>
+      <small>${p.loss_post2020_ha > 0 ? num(p.loss_post2020_ha) + " ha loss" : "no loss"}</small></div>`;
+  }).join("");
+  document.querySelectorAll(".row").forEach(r => r.onclick = () => select(r.dataset.id));
+}
+
+function select(id) {
+  selected = id;
+  const f = data.features.find(x => x.properties.plot_id === id);
+  const p = f.properties, fl = FLAGS[p.flag];
+  map.getLayer("plot-line") && map.setPaintProperty("plot-line", "line-width", ["case", ["==", ["get", "plot_id"], id], 3.5, 2]);
+  map.getLayer("plot-casing") && map.setPaintProperty("plot-casing", "line-width", ["case", ["==", ["get", "plot_id"], id], 7, 5]);
+  if (mapLoaded) map.flyTo({ center: centroid(f), zoom: 15, speed: 1.6 });
+
+  const thumbs = p.has_thumbs ? `
+    <div class="thumbs">
+      <figure><img src="data/thumbs/${esc(id)}_before.jpg" alt="Sentinel-2, dry season 2019/20">
+        <figcaption>Before · dry season 2019/20${p.ndvi_before != null ? " · NDVI " + num(p.ndvi_before) : ""}</figcaption></figure>
+      <figure><img src="data/thumbs/${esc(id)}_after.jpg" alt="Sentinel-2, dry season 2025/26">
+        <figcaption>After · dry season 2025/26${p.ndvi_after != null ? " · NDVI " + num(p.ndvi_after) : ""}</figcaption></figure>
+    </div>` : `<p class="sub">No Sentinel-2 preview for this plot.</p>`;
+
+  const d = document.getElementById("detail");
+  d.innerHTML = `
+    <button class="back" id="back">← All plots</button>
+    <h2>${esc(id)} <span class="flag" style="background:${fl.color}">${fl.label}</span></h2>
+    <div class="reason">${esc(p.flag_reason)}</div>
+    ${thumbs}
+    <table>
+      <tr><td>Commodity</td><td>${esc(p.commodity)}</td></tr>
+      <tr><td>Geolocation given as</td><td>${p.geom_input === "point" ? "point (&lt; 4 ha)" : "polygon"}</td></tr>
+      <tr><td>Plot area</td><td>${num(p.area_ha)} ha</td></tr>
+      <tr><td>Forest on 31 Dec 2020 (JRC)</td><td>${pct(p.jrc_forest_2020_share)}</td></tr>
+      <tr><td>Tree cover in 2000 (Hansen)</td><td>${num(p.treecover2000_mean, 0)}%</td></tr>
+      <tr><td>Tree-cover loss after 2020</td><td>${num(p.loss_post2020_ha)} ha (${pct(p.loss_post2020_share)})</td></tr>
+      <tr><td>Loss years</td><td>${esc(p.loss_years) || "–"}</td></tr>
+    </table>`;
+  d.classList.add("open");
+  document.getElementById("list").style.display = "none";
+  d.scrollIntoView({ block: "start" });
+  document.getElementById("back").onclick = () => {
+    d.classList.remove("open"); document.getElementById("list").style.display = "";
+    selected = null; renderList(); if (mapLoaded) fitAll();
+  };
+}
+</script>
+</body>
+</html>

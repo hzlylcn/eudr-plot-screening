@@ -9,3 +9,6 @@ outputs/
 
 # private notes (market research, not part of the public repo)
 docs/
+
+# local editor / preview settings
+.claude/
